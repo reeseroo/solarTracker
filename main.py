@@ -1,0 +1,1 @@
+//current power in summary
