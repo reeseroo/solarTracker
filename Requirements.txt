@@ -1,1 +1,2 @@
-RPi.GPIO
+RPi.GPIO on Raspberry Pi
+Mock.GPIO on other platforms
