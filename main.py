@@ -1,4 +1,9 @@
-#current power in summary
+# current power in summary
+# yellow = 4
+# green = 24
+# red = 23
+# white = 22
+# blue = 14
 
 
 try:
@@ -9,11 +14,23 @@ except ImportError:
 import time
 
 bluePin = 14
+yellowPin = 4
+greenPin = 24
+redPin = 23
+whitePin = 22
 
 GPIO.setmode(GPIO.BCM)
 GPIO.setup(bluePin, GPIO.OUT)
+GPIO.setup(yellowPin, GPIO.OUT)
+GPIO.setup(greenPin, GPIO.OUT)
+GPIO.setup(redPin, GPIO.OUT)
+GPIO.setup(whitePin, GPIO.OUT)
 
-GPIO.output(bluePin, GPIO.HIGH)
+GPIO.output(bluePin, GPIO.LOW)
+GPIO.output(yellowPin, GPIO.LOW)
+GPIO.output(greenPin, GPIO.LOW)
+GPIO.output(redPin, GPIO.LOW)
+GPIO.output(whitePin, GPIO.LOW)
 
 try:
         while 1:
