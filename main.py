@@ -31,7 +31,7 @@ GPIO.output(greenPin, GPIO.LOW)
 GPIO.output(redPin, GPIO.LOW)
 GPIO.output(whitePin, GPIO.LOW)
 
-telemetryInterval = 10
+telemetryInterval = 60*10
 tokenRefreshInterval = 5 * 60 * 60
 tokenRefreshTime = time.time()
 netProduction = 0
@@ -81,5 +81,5 @@ try:
             GPIO.output(greenPin, GPIO.HIGH)
             print("Green")
         time.sleep(telemetryInterval)
-except KeyboardInterrupt:
+except KeyboardInterrupt and Exception as e:
     GPIO.cleanup()
