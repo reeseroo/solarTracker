@@ -31,7 +31,7 @@ GPIO.output(greenPin, GPIO.LOW)
 GPIO.output(redPin, GPIO.LOW)
 GPIO.output(whitePin, GPIO.LOW)
 
-telemetryInterval = 60*10
+telemetryInterval = 60*0.5
 tokenRefreshInterval = 5 * 60 * 60
 tokenRefreshTime = time.time()
 netProduction = latest_telemetry()

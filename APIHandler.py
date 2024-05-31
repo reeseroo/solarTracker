@@ -77,7 +77,7 @@ def new_tokens():
     conn.close()
     response = json.loads(data.decode("utf-8"))
     if res.status != 200:
-        print("Error: " + response)
+        print("Error: " + json.dumps(response))
         return
     unique_access_token = response.get("access_token", "")
     refresh_token = response.get("refresh_token", "")
@@ -196,7 +196,7 @@ def latest_telemetry():
     conn.close()
     response = json.loads(data.decode("utf-8"))
     if res.status != 200:
-        print("Error: " + response)
+        print("Error: " + json.dumps(response))
         return
     #print(response)
     total_production = 0
