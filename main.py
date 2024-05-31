@@ -39,13 +39,28 @@ telemetryTime = time.time()
 
 try:
     while 1:
-        try:
             currentTime = time.time()
             if currentTime - tokenRefreshTime >= tokenRefreshInterval:
-                new_tokens()
-                tokenRefreshTime = currentTime
+                try:
+                    new_tokens()
+                    tokenRefreshTime = currentTime
+                except Exception as e:
+                    print(e)
+                    GPIO.output(redPin, GPIO.HIGH)
+                    GPIO.output(greenPin, GPIO.LOW)
+                    GPIO.output(yellowPin, GPIO.HIGH)
+                    GPIO.output(whitePin, GPIO.LOW)
+                    GPIO.output(bluePin, GPIO.LOW)
             if currentTime - telemetryTime >= telemetryInterval:
-                netProduction = latest_telemetry()
+                try:
+                    netProduction = latest_telemetry()
+                except Exception as e:
+                    print(e)
+                    GPIO.output(redPin, GPIO.HIGH)
+                    GPIO.output(greenPin, GPIO.LOW)
+                    GPIO.output(yellowPin, GPIO.HIGH)
+                    GPIO.output(whitePin, GPIO.LOW)
+                    GPIO.output(bluePin, GPIO.LOW)
             if netProduction <= 0:
                 GPIO.output(redPin, GPIO.HIGH)
                 GPIO.output(greenPin, GPIO.LOW)
@@ -82,7 +97,5 @@ try:
                 GPIO.output(greenPin, GPIO.HIGH)
                 print("Green")
             time.sleep(telemetryInterval)
-        except Exception as e:
-            print(e)
 except KeyboardInterrupt:
     GPIO.cleanup()
