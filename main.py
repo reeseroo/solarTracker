@@ -31,7 +31,7 @@ GPIO.output(greenPin, GPIO.LOW)
 GPIO.output(redPin, GPIO.LOW)
 GPIO.output(whitePin, GPIO.LOW)
 
-telemetryInterval = 60*0.5
+telemetryInterval = 60*10
 tokenRefreshInterval = 5 * 60 * 60
 tokenRefreshTime = time.time()
 netProduction = latest_telemetry()
@@ -39,48 +39,50 @@ telemetryTime = time.time()
 
 try:
     while 1:
-        currentTime = time.time()
-        if currentTime - tokenRefreshTime >= tokenRefreshInterval:
-            new_tokens()
-            tokenRefreshTime = currentTime
-        if currentTime - telemetryTime >= telemetryInterval:
-            netProduction = latest_telemetry()
-        if netProduction <= 0:
-            GPIO.output(redPin, GPIO.HIGH)
-            GPIO.output(greenPin, GPIO.LOW)
-            GPIO.output(yellowPin, GPIO.LOW)
-            GPIO.output(whitePin, GPIO.LOW)
-            GPIO.output(bluePin, GPIO.LOW)
-            print("Red")
-        elif netProduction > 0 and netProduction < 1000:
-            GPIO.output(redPin, GPIO.LOW)
-            GPIO.output(yellowPin, GPIO.HIGH)
-            GPIO.output(whitePin, GPIO.LOW)
-            GPIO.output(bluePin, GPIO.LOW)
-            GPIO.output(greenPin, GPIO.LOW)
-            print("Yellow")
-        elif netProduction >= 1000 and netProduction < 2000:
-            GPIO.output(redPin, GPIO.LOW)
-            GPIO.output(yellowPin, GPIO.HIGH)
-            GPIO.output(whitePin, GPIO.HIGH)
-            GPIO.output(bluePin, GPIO.LOW)
-            GPIO.output(greenPin, GPIO.LOW)
-            print("White")
-        elif netProduction >= 2000 and netProduction < 3000:
-            GPIO.output(redPin, GPIO.LOW)
-            GPIO.output(yellowPin, GPIO.HIGH)
-            GPIO.output(whitePin, GPIO.HIGH)
-            GPIO.output(bluePin, GPIO.HIGH)
-            GPIO.output(greenPin, GPIO.LOW)
-            print("Blue")
-        elif netProduction >= 3000:
-            GPIO.output(redPin, GPIO.LOW)
-            GPIO.output(yellowPin, GPIO.HIGH)
-            GPIO.output(whitePin, GPIO.HIGH)
-            GPIO.output(bluePin, GPIO.HIGH)
-            GPIO.output(greenPin, GPIO.HIGH)
-            print("Green")
-        time.sleep(telemetryInterval)
-except KeyboardInterrupt and Exception as e:
-    print(e)
+        try:
+            currentTime = time.time()
+            if currentTime - tokenRefreshTime >= tokenRefreshInterval:
+                new_tokens()
+                tokenRefreshTime = currentTime
+            if currentTime - telemetryTime >= telemetryInterval:
+                netProduction = latest_telemetry()
+            if netProduction <= 0:
+                GPIO.output(redPin, GPIO.HIGH)
+                GPIO.output(greenPin, GPIO.LOW)
+                GPIO.output(yellowPin, GPIO.LOW)
+                GPIO.output(whitePin, GPIO.LOW)
+                GPIO.output(bluePin, GPIO.LOW)
+                print("Red")
+            elif netProduction > 0 and netProduction < 1000:
+                GPIO.output(redPin, GPIO.LOW)
+                GPIO.output(yellowPin, GPIO.HIGH)
+                GPIO.output(whitePin, GPIO.LOW)
+                GPIO.output(bluePin, GPIO.LOW)
+                GPIO.output(greenPin, GPIO.LOW)
+                print("Yellow")
+            elif netProduction >= 1000 and netProduction < 2000:
+                GPIO.output(redPin, GPIO.LOW)
+                GPIO.output(yellowPin, GPIO.HIGH)
+                GPIO.output(whitePin, GPIO.HIGH)
+                GPIO.output(bluePin, GPIO.LOW)
+                GPIO.output(greenPin, GPIO.LOW)
+                print("White")
+            elif netProduction >= 2000 and netProduction < 3000:
+                GPIO.output(redPin, GPIO.LOW)
+                GPIO.output(yellowPin, GPIO.HIGH)
+                GPIO.output(whitePin, GPIO.HIGH)
+                GPIO.output(bluePin, GPIO.HIGH)
+                GPIO.output(greenPin, GPIO.LOW)
+                print("Blue")
+            elif netProduction >= 3000:
+                GPIO.output(redPin, GPIO.LOW)
+                GPIO.output(yellowPin, GPIO.HIGH)
+                GPIO.output(whitePin, GPIO.HIGH)
+                GPIO.output(bluePin, GPIO.HIGH)
+                GPIO.output(greenPin, GPIO.HIGH)
+                print("Green")
+            time.sleep(telemetryInterval)
+        except Exception as e:
+            print(e)
+except KeyboardInterrupt:
     GPIO.cleanup()
